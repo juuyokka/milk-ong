@@ -16,7 +16,7 @@ jobs:
           hugo-version: '0.119.0'
       - name: "Build website"
         run: "hugo --minify"
-      - name: "Upload artifacts"
+      - name: "Upload artifact"
         uses: actions/upload-artifact@v3
         with:
           name: public
