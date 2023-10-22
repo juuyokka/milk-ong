@@ -1,0 +1,4 @@
+baseURL = 'https://milk.ong/'
+languageCode = 'en-us'
+title = 'milk.ong'
+theme = 'hugo-bearblog'
