@@ -7,10 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
-    steps:
-      - name: "Build website"
-        uses: juuyokka/milk-ong/.github/workflows/build.yml@deploy
+    uses: juuyokka/milk-ong/.github/workflows/build.yml@deploy
   deploy:
     needs: build
     runs-on: ubuntu-22.04
