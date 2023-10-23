@@ -1,0 +1,29 @@
+name: Deploy to server
+
+on:
+  push:
+    branches: [ "deploy" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: "Build website"
+        uses: juuyokka/milk-ong/.github/workflows/build.yml@deploy
+  deploy:
+    needs: build
+    runs-on: ubuntu-22.04
+    steps:
+      - name: "Download build artifacts"
+        uses: actions/download-artifact@v3
+        with:
+          name: public
+          path: ~/public
+      - name: "Set up ssh key and known hosts"
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.DEPLOY_KEY }}
+          known_hosts: ${{ secrets.SERVER_FINGERPRINT }}
+      - name: "rsync over ssh"
+        run: "rsync -rzP --delete public/ deploy@${{ secrets.SERVER_IP }}:/usr/local/www/site"
